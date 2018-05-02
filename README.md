@@ -41,7 +41,7 @@ $ tree files/
 # ...
 ```
 
-Files should take up about 1GB as `.mp3`
+Files should take up about 1,5GB as `.mp3`
 
 ### Convert to `.wav`
 Install [ffmpeg](https://ffmpeg.org/) and [pydub](http://pydub.com/)
@@ -53,7 +53,7 @@ pip install pydub
 Run `converter.py` inside the `voice-grabber/` directory:
 
 ```
-./converter.py
+python3 converter.py
 ```
 
 This might take a while, files will take up about 6GB as `.wav`
