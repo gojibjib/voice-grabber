@@ -2,7 +2,7 @@
 This repo is a collection of scripts leveraging [gopeana](https://github.com/gojibjib/gopeana) to download the [CDV 2018 Ost](https://codingdavinci.de/events/ost/) dataset of [bird voices](https://www.europeana.eu/portal/de/search?f%5BREUSABILITY%5D%5B%5D=open&q=tierstimmenarchiv).
 
 ## Instructions
-Get the repo
+### Prepare
 
 ```
 $ git clone https://gojibjib/voice-grabber
@@ -15,6 +15,7 @@ $ export APIKEY=XXXXX
 $ export SECRETKEY=YYYYY
 ```
 
+### Get the data
 Run `data_grabber.go` to extract the necessary URLs. This will also generate a `.csv` file with colums for `name`, `genus`, `species` and number of `voice_files`, as well as a `.json` file with the same information.
 
 ```
@@ -39,6 +40,23 @@ $ tree files/
 │   └── Accipiter_gentilis_6.mp3
 # ...
 ```
+
+Files should take up about 1GB as `.mp3`
+
+### Convert to `.wav`
+Install [ffmpeg](https://ffmpeg.org/) and [pydub](http://pydub.com/)
+
+```
+pip install pydub
+```
+
+Run `converter.py` inside the `voice-grabber/` directory:
+
+```
+./converter.py
+```
+
+This might take a while, files will take up about 6GB as `.wav`
 
 ## Stats
 Key|Value
