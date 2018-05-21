@@ -1,3 +1,4 @@
 pydub
 pandas
 requests
+beautifulsoup4
