@@ -3,6 +3,8 @@ files/
 *.zip
 *.json
 *.csv
+*.txt
+*.pickle
 # End of Project #
 # Created by https://www.gitignore.io/api/go,macos,intellij+all,python
 
