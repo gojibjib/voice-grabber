@@ -14,12 +14,7 @@ import (
 	"time"
 )
 
-type DL struct {
-	Name  string   `json:"name"`
-	Links []string `json:"links"`
-}
-
-func checkErr(err error) {
+func checkErrFatal(err error) {
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -29,14 +24,20 @@ func downloadFile(query, filepath string) int {
 	var code int
 
 	// Get the data
-	client := http.Client{Timeout: 10 * time.Second}
+	client := http.Client{Timeout: 60 * time.Second}
 	req, err := http.NewRequest("GET", query, nil)
-	checkErr(err)
+	checkErrFatal(err)
 	req.Header.Add("User-Agent", "Mozilla/5.0 (Nice crawler for extracting German birds and sounds. See github.com/gojibjib - Thank you)")
 
 	resp, err := client.Do(req)
-	checkErr(err)
+	if err != nil {
+		log.Println(err)
+		return 500
+	}
 	defer resp.Body.Close()
+
+	// Assigning to prevent timeout
+	content := resp.Body
 
 	// Check status code
 	code = resp.StatusCode
@@ -47,13 +48,15 @@ func downloadFile(query, filepath string) int {
 
 	// Creating the file
 	out, err := os.Create(filepath)
-	checkErr(err)
+	checkErrFatal(err)
 	defer out.Close()
 
 	// Write to file
-	_, err = io.Copy(out, resp.Body)
-	checkErr(err)
-
+	_, err = io.Copy(out, content)
+	if err != nil {
+		log.Println(err)
+		return 500
+	}
 	return code
 }
 
@@ -64,10 +67,10 @@ func main() {
 	filesDir, _ := filepath.Abs("../files")
 
 	jsonFile, err := ioutil.ReadFile(jsonName)
-	checkErr(err)
+	checkErrFatal(err)
 
 	err = json.Unmarshal(jsonFile, &dlMap)
-	checkErr(err)
+	checkErrFatal(err)
 
 	// URL things
 	url := "https://www.xeno-canto.org"
@@ -90,10 +93,9 @@ func main() {
 				fmt.Printf("%d/%d: %s ", idx+1, maxDl, id)
 				currUrl := fmt.Sprintf("%s%s/download", url, id)
 				downloadFile(currUrl, fPath)
-				time.Sleep(500 * time.Millisecond)
+				time.Sleep(1 * time.Second)
 			}
 		}
-		os.Exit(0)
 		fmt.Println()
 		c++
 	}
