@@ -93,7 +93,7 @@ func main() {
 				fmt.Printf("%d/%d: %s ", idx+1, maxDl, id)
 				currUrl := fmt.Sprintf("%s%s/download", url, id)
 				downloadFile(currUrl, fPath)
-				time.Sleep(1 * time.Second)
+				time.Sleep(500 * time.Millisecond)
 			}
 		}
 		fmt.Println()

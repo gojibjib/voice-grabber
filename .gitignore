@@ -1,8 +1,7 @@
 # Project #
 files/
+old/
 *.zip
-*.json
-*.csv
 *.txt
 *.pickle
 # End of Project #
