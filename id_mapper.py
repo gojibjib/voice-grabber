@@ -12,8 +12,6 @@ for i in range(n):
     name = df['name'].iat[i].replace(" ", "_")
     bird_id_map[name] = i
 
-print(bird_id_map)
-
 pickle_path = os.path.abspath("./meta/bird_id_map.pickle")
 with open(pickle_path, "wb") as wf:
-    pickle.dump(bird_id_map, wf)
+    pickle.dump(bird_id_map, wf, protocol=2)
