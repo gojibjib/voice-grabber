@@ -1,66 +1,21 @@
-# voice-grabber
-This repo is a collection of scripts leveraging [gopeana](https://github.com/gojibjib/gopeana) to download the [CDV 2018 Ost](https://codingdavinci.de/events/ost/) dataset of [bird voices](https://www.europeana.eu/portal/de/search?f%5BREUSABILITY%5D%5B%5D=open&q=tierstimmenarchiv).
+# [voice-grabber](https://github.com/gojibjib/voice-grabber)
+This repo is a collection of scripts to download the dataset necessary to train the [jibjib-model](https://github.com/gojibjib/jibjib-model)
 
-## Instructions
-### Prepare
+## Scripts
+In the top level of this repo, there are several helper scripts to create/change JSON and CSV files, as well as `converter.py` to convert audio files from `mp3` to `wav`.
 
-```
-$ git clone https://gojibjib/voice-grabber
-```
+### [data_grabber/](https://github.com/gojibjib/voice-grabber/tree/master/data_grabber)
+This Go script uses [gopeana](https://github.com/gojibjib/gopeana) to populate both a JSON and CSV file with information about the on Europeana published bird voices from the [Tierstimmenarchiv](www.tierstimmenarchiv.de) ([open dataset](https://www.europeana.eu/portal/de/search?f[REUSABILITY][]=open&q=tierstimmenarchiv) of the [Museum für Naturkunde Berlin](https://www.museumfuernaturkunde.berlin/))
 
-Set your API key and secret key as environment variables
+### [file_grabber/](https://github.com/gojibjib/voice-grabber/tree/master/file_grabber)
+This Go script uses the output of [data_grabber/](https://github.com/gojibjib/voice-grabber/tree/master/data_grabber) to follow the links provided on Europeana and download the audio files.
 
-```
-$ export APIKEY=XXXXX
-$ export SECRETKEY=YYYYY
-```
+### [wiki_grabber/](https://github.com/gojibjib/voice-grabber/tree/master/wiki_grabber)
+This Python script takes input from a CSV file and uses the Wikipedia API to extract summaries about birds, then saves it in a seperate CSV.
 
-### Get the data
-Run `data_grabber.go` to extract the necessary URLs. This will also generate a `.csv` file with colums for `name`, `genus`, `species` and number of `voice_files`, as well as a `.json` file with the same information.
+### [xeno_grabber/](https://github.com/gojibjib/voice-grabber/tree/master/xeno_grabber)
+This is a collection of scripts to:
 
-```
-$ go run data_grabber/data_grabber.go
-```
-
-Run `file_grabber.go` to download the files. They will then be placed in the `files/` folder:
-
-```
-$ tree files/
-.
-├── Accipiter_brevipes
-│   └── Accipiter_brevipes_1.mp3
-├── Accipiter_castanilius
-│   └── Accipiter_castanilius_1.mp3
-├── Accipiter_gentilis
-│   ├── Accipiter_gentilis_1.mp3
-│   ├── Accipiter_gentilis_2.mp3
-│   ├── Accipiter_gentilis_3.mp3
-│   ├── Accipiter_gentilis_4.mp3
-│   ├── Accipiter_gentilis_5.mp3
-│   └── Accipiter_gentilis_6.mp3
-# ...
-```
-
-Files should take up about 1,5GB as `.mp3`
-
-### Convert to `.wav`
-Install [ffmpeg](https://ffmpeg.org/) and [pydub](http://pydub.com/)
-
-```
-pip install pydub
-```
-
-Run `converter.py` inside the `voice-grabber/` directory:
-
-```
-python3 converter.py
-```
-
-This might take a while, files will take up about 6GB as `.wav`
-
-## Stats
-Key|Value
----|---
-Unique birds|1189
-Total number of bird voices|3843
-avg(voices / bird)|3,23
+- clean the files directory (in our case, in order to bring down the total number of classes, birds with a German Wikipedia entry were used.)
+- nicely crawl [Xeno Canto](www.xeno-canto.org) for audio files of birds
+- download the audio files from Xeno Canto
