@@ -1,6 +1,18 @@
 # [voice-grabber](https://github.com/gojibjib/voice-grabber)
 This repo is a collection of scripts to download the dataset necessary to train the [jibjib-model](https://github.com/gojibjib/jibjib-model)
 
+## Repo layout
+The complete list of JibJib repos is:
+
+- [jibjib](https://github.com/gojibjib/jibjib): Our Android app. Records sounds and looks fantastic.
+- [deploy](https://github.com/gojibjib/deploy): Instructions to deploy the JibJib stack.
+- [jibjib-model](https://github.com/gojibjib/jibjib-model): Code for training the machine learning model for bird classification
+- [jibjib-api](https://github.com/gojibjib/jibjib-api): Main API to receive database requests & audio files.
+- [jibjib-data](https://github.com/gojibjib/jibjib-data): A MongoDB instance holding information about detectable birds.
+- [jibjib-query](https://github.com/gojibjib/jibjib-query): A thin Python Flask API that handles communication with the [TensorFlow Serving](https://www.tensorflow.org/serving/) instance.
+- [gopeana](https://github.com/gojibjib/gopeana): A API client for [Europeana](https://europeana.eu), written in Go.
+- [voice-grabber](https://github.com/gojibjib/voice-grabber): A collection of scripts to construct the dataset required for model training
+
 ## Scripts
 In the top level of this repo, there are several helper scripts to create/change JSON and CSV files, as well as `converter.py` to convert audio files from `mp3` to `wav`.
 
